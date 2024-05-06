@@ -1,22 +1,20 @@
 name: Bug
-description: Make sure you complete the template. Otherwise, it will be closed without further explanation!
+description: Report a bug here
 title: "[Bug] Replace this with your title"
 labels: bug
 body:
 - type: checkboxes
   attributes:
     label: Is there an existing issue for this?
-    description: Please search to see if an issue already exists for the bug you encountered. **I DIDN\'T MAKE THIS CHECKBOX FOR COSMETICS**
     options:
     - label: I have searched the existing issues
       required: true
       
 - type: checkboxes
   attributes:
-    label: Have you read the FAQ?
-    description: Make sure you actually visit the [**FAQ**](https://github.com/qnblackcat/uYouPlus/wiki/FAQ) page! **I DIDN\'T MAKE THIS CHECKBOX FOR COSMETICS**
+    label: Have you read the [**Wiki**](https://github.com/arichornlover/uYouEnhanced/wiki)?
     options:
-    - label: Yes, I did read the FAQ
+    - label: Yes, I have read the Wiki
       required: true
 
 - type: markdown
@@ -26,29 +24,38 @@ body:
 - type: input
   attributes:
     label: iOS/iPadOS version
+    placeholder: iOS 17.4
   validations:
     required: true
 
 - type: input
   attributes:
     label: Device model
+    placeholder: iPhone 15 Pro Max
   validations:
     required: true
 
 - type: input
   attributes:
-    label: Sideload tool
-    placeholder: AltStore, Sideloadly, TrollStore, ...
+    label: Sideload method
+    placeholder: AltStore, Sideloadly, TrollStore, Signulous, deb, ...
   validations:
     required: true
 
 - type: input
   attributes:
     label: Tweak version
-    placeholder: uYouEnhanced/uYouPlusExtra/uYouPlus - v18.xx.x-3.0.1
+    placeholder: uYouEnhanced - v19.xx.x-3.0.3
     description: "**latest or newest is NOT a version number!**"
   validations:
     required: true
+
+- type: checkboxes
+  attributes:
+    label: Do you have Youtube Premium?
+    options:
+    - label: Yes, I have Youtube Premium
+      required: false
 
 - type: markdown
   attributes:
@@ -76,23 +83,22 @@ body:
   id: logs
   attributes:
     label: Crash log (if the app crashes)
-    description: If somehow the app crashes, **you must provide the crash log**. It can be found in your device's Settings App > Privacy > Analytics & Improvements > Analytics Data > Youtube-xxx-xxx.ips
+    description: If the app crashes, **you must provide the crash log**. It can be found in Settings App > Privacy > Analytics & Improvements > Analytics Data > Youtube-xxx-xxx.ips
     render: shell
 
 - type: dropdown
   attributes:
-    label: Are you using the newest version of uYouPlus? If not, why?
-    description: Developers spend time and effort to fix bugs & add improvements with every release. Why don't you update to the [latest version](https://github.com/qnblackcat/uYouPlus/releases/latest) before reporting about an issue?
+    label: Are you using the newest version of uYouEnhanced?
+    description: Update to the [latest version](https://github.com/arichornlover/uYouEnhanced/actions?query=branch%3Amain) to see if it fixes your issue
     options:
-      - ✅ Yes, I'm using the latest version of uYouPlus right now
-      - ❌ No, I'll explain at the end of the template
+      - ✅ Yes, I'm using the latest version
+      - ❌ No, I'll explain at the end
   validations:
     required: true
 
 - type: dropdown
   attributes:
     label: Does the issue happen with the official YouTube from AppStore?
-    description: Well, YouTube itself is buggy sometimes...
     options:
       - ❌ No, I can't reproduce this issue in the official YouTube from AppStore 
       - ✅ Yes, I can reproduce this issue in the official YouTube from AppStore 
@@ -102,6 +108,5 @@ body:
 - type: textarea
   attributes:
     label: Additional context
-    description: Um, anything else you want to say?
   validations:
     required: false
