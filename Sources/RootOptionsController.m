@@ -158,6 +158,13 @@
                 });
             });
         }
+        if (indexPath.row == 1) {    
+            DownloadsController *downloadsController = [[DownloadsController alloc] init];
+            UINavigationController *downloadsControllerView = [[UINavigationController alloc] initWithRootViewController:downloadsController];
+            downloadsControllerView.modalPresentationStyle = UIModalPresentationFullScreen;
+
+            [self presentViewController:downloadsControllerView animated:YES completion:nil];
+        }
     }
 }
 
