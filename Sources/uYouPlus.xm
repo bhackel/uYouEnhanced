@@ -1362,6 +1362,47 @@ static BOOL findCell(ASNodeController *nodeController, NSArray <NSString *> *ide
 
 %end
 
+// New method to hide the action buttons (Like/Dislike/Comment/Share/Remix) in Shorts - @bhackel
+%hook YTReelWatchPlaybackOverlayView
+- (void)layoutSubviews {
+    %orig;
+    if (YES) {
+        // Get to the action bar's sub-container view
+        YTELMView *_actionBarView = [self valueForKey:@"_actionBarView"];
+        UIView containerView = _actionBarView.subviews.firstObject;
+        NSInteger maxCount = containerView.subviews.count;
+        // Iterate each button in the actions view
+        for (NSInteger i = 0; i < maxCount; i++) {
+            UIView *parentSubview = containerView.subviews[i];
+            // Exit early if this is already hidden
+            if (parentSubview.hidden) {
+                continue;
+            }
+            // Drill down until at the bottom of the subviews
+            UIView *curSubview = parentSubview;
+            while (curSubview.subviews.count > 0) {
+                curSubview = curSubview.subviews.firstObject;
+            }
+            // Check the accessiblity identifier of this view against pre-found identifiers
+            NSString *accessibilityIdentifier = curSubview.accessibilityIdentifier;
+            if ((IS_ENABLED(@"hideLikeButton_enabled") && [accessibilityIdentifier isEqualToString:@"id.reel_like_button"]) ||
+                (IS_ENABLED(@"hideDislikeButton_enabled") && [accessibilityIdentifier isEqualToString:@"id.reel_dislike_button"]) ||
+                (IS_ENABLED(@"hideCommentButton_enabled") && [accessibilityIdentifier isEqualToString:@"id.reel_comment_button"]) ||
+                (IS_ENABLED(@"hideShareButton_enabled") && [accessibilityIdentifier isEqualToString:@"id.reel_share_button"]) ||
+                (IS_ENABLED(@"hideRemixButton_enabled") && [accessibilityIdentifier isEqualToString:@"id.reel_remix_button"])) {
+                parentSubview.hidden = YES;
+                // Move all elements before (as in values up to i) this view down by 76 units
+                for (NSInteger j = 0; j < i; j++) {
+                    UIView *view = containerView.subviews[j];
+                    view.frame = CGRectOffset(view.frame, 0, 76);
+                }
+            }
+        }
+    }
+}
+
+%end
+
 // App Settings Overlay Options
 %group gDisableAccountSection
 %hook YTSettingsSectionItemManager
